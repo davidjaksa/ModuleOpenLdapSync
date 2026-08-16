@@ -19,7 +19,7 @@ async function filesUnder(directory) {
 
 const manifest = JSON.parse(await readFile(join(moduleRoot, 'module.json'), 'utf8'));
 assert.equal(manifest.moduleUniqueID, 'ModuleOpenLdapSync');
-assert.equal(manifest.version, '1.1.3');
+assert.equal(manifest.version, '1.1.4');
 assert.equal(manifest.min_pbx_version, '2025.1.1');
 assert.ok(!Object.hasOwn(manifest, 'lic_product_id'));
 assert.ok(!Object.hasOwn(manifest, 'lic_feature_id'));
@@ -59,6 +59,11 @@ const connector = await readFile(join(moduleRoot, 'Lib/LdapSyncConnector.php'), 
 assert.ok(connector.includes("$this->ldapType === 'Authentik' ? 'uid' : ''"));
 assert.ok(connector.includes("$this->ldapType === 'Authentik'"));
 assert.ok(connector.includes("['1', 'true', 'yes', 'on']"));
+assert.ok(connector.includes("$this->userAttributes[Constants::USER_AVATAR_ATTR] ?? ''"));
+
+const syncMain = await readFile(join(moduleRoot, 'Lib/LdapSyncMain.php'), 'utf8');
+assert.ok(syncMain.includes("$ldapConnector->userAttributes[Constants::USER_AVATAR_ATTR] ?? ''"));
+assert.ok(syncMain.includes("$postData[Constants::USER_AVATAR_ATTR] ?? ''"));
 
 const form = await readFile(join(moduleRoot, 'App/Forms/LdapConfigForm.php'), 'utf8');
 assert.ok(form.includes("'Authentik' => 'Authentik'"));

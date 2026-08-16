@@ -3,7 +3,7 @@
 set -eu
 
 if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 /absolute/path/ModuleOpenLdapSync.1.1.3.zip" >&2
+    echo "Usage: $0 /absolute/path/ModuleOpenLdapSync.1.1.4.zip" >&2
     exit 2
 fi
 
@@ -47,8 +47,8 @@ if [ ! -d "$output_dir" ]; then
     exit 1
 fi
 
-temporary_dir=$(mktemp -d "$output_dir/.ModuleOpenLdapSync.1.1.3.XXXXXX")
-temporary_archive="$temporary_dir/ModuleOpenLdapSync.1.1.3.zip"
+temporary_dir=$(mktemp -d "$output_dir/.ModuleOpenLdapSync.1.1.4.XXXXXX")
+temporary_archive="$temporary_dir/ModuleOpenLdapSync.1.1.4.zip"
 trap 'rm -f "$temporary_archive"; rmdir "$temporary_dir" 2>/dev/null || true' EXIT HUP INT TERM
 
 (

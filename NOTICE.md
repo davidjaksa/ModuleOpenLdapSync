@@ -42,6 +42,9 @@ with the independent package identity and public repository information.
 Version 1.1.3, modified 2026-08-17, corrects the MikoPBX configuration-class
 name used to discover the module REST callback and synchronization worker.
 
+Version 1.1.4, modified 2026-08-17, safely handles omitted optional LDAP
+attribute mappings in PHP 8.4, including the empty Authentik avatar mapping.
+
 No MikoPBX license keys, license-service code, or marketplace binaries are
 included or modified by this distribution.
 

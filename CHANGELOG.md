@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.4 - 2026-08-17
+
+- Treat empty optional LDAP mappings, including Authentik's unused avatar and
+  password attributes, as valid configuration values.
+- Prevent preview, synchronization, form rendering, and save operations from
+  raising PHP 8.4 undefined-array-key exceptions when optional fields are omitted.
+
 ## 1.1.3 - 2026-08-17
 
 - Rename the module configuration class to `OpenLdapSyncConf` so MikoPBX can

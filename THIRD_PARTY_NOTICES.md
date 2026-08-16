@@ -1,6 +1,6 @@
 # Third-party software notices
 
-ModuleOpenLdapSync 1.1.3 bundles the Composer dependencies listed below. All
+ModuleOpenLdapSync 1.1.4 bundles the Composer dependencies listed below. All
 are distributed under the MIT License. The dependency versions and source
 revisions are locked in `composer.lock`; the complete license text is included
 inside each corresponding `vendor/` package in the release archive.

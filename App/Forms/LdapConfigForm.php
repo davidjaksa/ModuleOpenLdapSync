@@ -157,7 +157,7 @@ class LdapConfigForm extends BaseForm
         //  UserPasswordAttribute
         $this->add(new Text(Constants::USER_PASSWORD_ATTR, [
             'placeholder' => 'sipPassword',
-            'value' => $attributes[Constants::USER_PASSWORD_ATTR]
+            'value' => $attributes[Constants::USER_PASSWORD_ATTR] ?? ''
         ]));
 
         // OrganizationUnit

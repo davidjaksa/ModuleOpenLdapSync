@@ -148,7 +148,7 @@ class ModuleOpenLdapSyncController extends BaseController
                     // we want to preserve whatever value the migration wrote.
                     break;
                 case 'disabled':
-                    $serverConfig->$name = $data['autosync']==='1'?'0':'1';
+                    $serverConfig->$name = ($data['autosync'] ?? '0') === '1' ? '0' : '1';
                     break;
                 case 'administrativePassword':
                     if (isset($data['administrativePasswordHidden'])
@@ -169,13 +169,13 @@ class ModuleOpenLdapSyncController extends BaseController
         }
 
         $attributes = [
-            Constants::USER_EMAIL_ATTR => $data[Constants::USER_EMAIL_ATTR],
-            Constants::USER_NAME_ATTR => $data[Constants::USER_NAME_ATTR],
-            Constants::USER_MOBILE_ATTR => $data[Constants::USER_MOBILE_ATTR],
-            Constants::USER_EXTENSION_ATTR => $data[Constants::USER_EXTENSION_ATTR],
-            Constants::USER_AVATAR_ATTR => $data[Constants::USER_AVATAR_ATTR],
-            Constants::USER_ACCOUNT_CONTROL_ATTR => $data[Constants::USER_ACCOUNT_CONTROL_ATTR],
-            Constants::USER_PASSWORD_ATTR => $data[Constants::USER_PASSWORD_ATTR],
+            Constants::USER_EMAIL_ATTR => (string)($data[Constants::USER_EMAIL_ATTR] ?? ''),
+            Constants::USER_NAME_ATTR => (string)($data[Constants::USER_NAME_ATTR] ?? ''),
+            Constants::USER_MOBILE_ATTR => (string)($data[Constants::USER_MOBILE_ATTR] ?? ''),
+            Constants::USER_EXTENSION_ATTR => (string)($data[Constants::USER_EXTENSION_ATTR] ?? ''),
+            Constants::USER_AVATAR_ATTR => (string)($data[Constants::USER_AVATAR_ATTR] ?? ''),
+            Constants::USER_ACCOUNT_CONTROL_ATTR => (string)($data[Constants::USER_ACCOUNT_CONTROL_ATTR] ?? ''),
+            Constants::USER_PASSWORD_ATTR => (string)($data[Constants::USER_PASSWORD_ATTR] ?? ''),
             Constants::USER_DISABLED=>Constants::USER_DISABLED
         ];
         $serverConfig->attributes = json_encode($attributes);

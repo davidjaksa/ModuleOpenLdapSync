@@ -443,7 +443,7 @@ class LdapSyncConnector extends Injectable
                 $record = [];
                 foreach ($requestAttributes as $attribute){
                     if ($user->hasAttribute($attribute)){
-                        if ($attribute===$this->userAttributes[Constants::USER_AVATAR_ATTR]) {
+                        if ($attribute === ($this->userAttributes[Constants::USER_AVATAR_ATTR] ?? '')) {
                             $binData = $user->getFirstAttribute($attribute);
                             if (self::isValidImageBinary($binData)) {
                                 $record[$attribute] = 'data:image/jpeg;base64,'.base64_encode($binData);

@@ -83,8 +83,8 @@ class LdapSyncMain extends Injectable
             $processedUser = $userFromLdap;
 
             // Remove avatar data from arrays to prevent memory leaks and overloading the beanstalk
-            $avatarKey = $connector->userAttributes[Constants::USER_AVATAR_ATTR];
-            if (!empty($processedUser[$avatarKey])) {
+            $avatarKey = $connector->userAttributes[Constants::USER_AVATAR_ATTR] ?? '';
+            if ($avatarKey !== '' && !empty($processedUser[$avatarKey])) {
                 $processedUser[$avatarKey] = 'base64picture...';
             }
 
@@ -110,7 +110,7 @@ class LdapSyncMain extends Injectable
                 }
             }
 
-            if (!empty($processedUser[$avatarKey])) {
+            if ($avatarKey !== '' && !empty($processedUser[$avatarKey])) {
                 $processedUser[$avatarKey] = '<i class="camera retro icon"></i>';
             }
             $processedUsers[] = $processedUser;
@@ -701,8 +701,8 @@ class LdapSyncMain extends Injectable
         $result = $ldapConnector->getUsersList();
 
         // Remove big data strings from response
-        $avatarKey = $ldapConnector->userAttributes[Constants::USER_AVATAR_ATTR];
-        if ($result->success) {
+        $avatarKey = $ldapConnector->userAttributes[Constants::USER_AVATAR_ATTR] ?? '';
+        if ($result->success && $avatarKey !== '') {
             foreach ($result->data as &$processedUser) {
                 if (!empty($processedUser[$avatarKey])) {
                     $processedUser[$avatarKey] = '<i class="camera retro icon"></i>';
@@ -754,29 +754,29 @@ class LdapSyncMain extends Injectable
 
         // Define attributes for LDAP search
         $attributes = [
-            Constants::USER_EMAIL_ATTR => $postData[Constants::USER_EMAIL_ATTR],
-            Constants::USER_NAME_ATTR => $postData[Constants::USER_NAME_ATTR],
-            Constants::USER_MOBILE_ATTR => $postData[Constants::USER_MOBILE_ATTR],
-            Constants::USER_EXTENSION_ATTR => $postData[Constants::USER_EXTENSION_ATTR],
-            Constants::USER_AVATAR_ATTR => $postData[Constants::USER_AVATAR_ATTR],
-            Constants::USER_ACCOUNT_CONTROL_ATTR => $postData[Constants::USER_ACCOUNT_CONTROL_ATTR],
-            Constants::USER_PASSWORD_ATTR => $postData[Constants::USER_PASSWORD_ATTR],
+            Constants::USER_EMAIL_ATTR => (string)($postData[Constants::USER_EMAIL_ATTR] ?? ''),
+            Constants::USER_NAME_ATTR => (string)($postData[Constants::USER_NAME_ATTR] ?? ''),
+            Constants::USER_MOBILE_ATTR => (string)($postData[Constants::USER_MOBILE_ATTR] ?? ''),
+            Constants::USER_EXTENSION_ATTR => (string)($postData[Constants::USER_EXTENSION_ATTR] ?? ''),
+            Constants::USER_AVATAR_ATTR => (string)($postData[Constants::USER_AVATAR_ATTR] ?? ''),
+            Constants::USER_ACCOUNT_CONTROL_ATTR => (string)($postData[Constants::USER_ACCOUNT_CONTROL_ATTR] ?? ''),
+            Constants::USER_PASSWORD_ATTR => (string)($postData[Constants::USER_PASSWORD_ATTR] ?? ''),
             Constants::USER_DISABLED => Constants::USER_DISABLED
         ];
 
         // Construct and return LDAP credentials
         return [
-            'id' => $postData['id'],
-            'ldapType' => $postData['ldapType'],
-            'serverName' => $postData['serverName'],
-            'serverPort' => $postData['serverPort'],
-            'baseDN' => $postData['baseDN'],
-            'administrativeLogin' => $postData['administrativeLogin'],
+            'id' => (string)($postData['id'] ?? ''),
+            'ldapType' => (string)($postData['ldapType'] ?? 'ActiveDirectory'),
+            'serverName' => (string)($postData['serverName'] ?? ''),
+            'serverPort' => (string)($postData['serverPort'] ?? '389'),
+            'baseDN' => (string)($postData['baseDN'] ?? ''),
+            'administrativeLogin' => (string)($postData['administrativeLogin'] ?? ''),
             'administrativePassword' => $postData['administrativePassword'],
             'attributes' => json_encode($attributes),
-            'organizationalUnit' => $postData['organizationalUnit'],
-            'userFilter' => $postData['userFilter'],
-            'updateAttributes' => $postData['updateAttributes'],
+            'organizationalUnit' => (string)($postData['organizationalUnit'] ?? ''),
+            'userFilter' => (string)($postData['userFilter'] ?? ''),
+            'updateAttributes' => (string)($postData['updateAttributes'] ?? '0'),
             'tlsMode' => $postData['tlsMode'] ?? 'none',
             // HTML checkboxes submit "on" when ticked — normalise it to the
             // stored '1'/'0' form before forwarding to the connector so the
