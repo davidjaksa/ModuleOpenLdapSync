@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { readFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -8,7 +9,7 @@ const moduleRoot = join(fileURLToPath(new URL('.', import.meta.url)), '..');
 async function filesUnder(directory) {
   const result = [];
   for (const entry of await readdir(directory, { withFileTypes: true })) {
-    if (entry.name === 'vendor' || entry.name === 'tests') continue;
+    if (['.git', '.idea', 'vendor', 'tests'].includes(entry.name)) continue;
     const absolute = join(directory, entry.name);
     if (entry.isDirectory()) result.push(...await filesUnder(absolute));
     else result.push(absolute);
@@ -18,7 +19,7 @@ async function filesUnder(directory) {
 
 const manifest = JSON.parse(await readFile(join(moduleRoot, 'module.json'), 'utf8'));
 assert.equal(manifest.moduleUniqueID, 'ModuleOpenLdapSync');
-assert.equal(manifest.version, '1.1.1');
+assert.equal(manifest.version, '1.1.2');
 assert.equal(manifest.min_pbx_version, '2025.1.1');
 assert.ok(!Object.hasOwn(manifest, 'lic_product_id'));
 assert.ok(!Object.hasOwn(manifest, 'lic_feature_id'));
@@ -106,6 +107,27 @@ assert.deepEqual(composer.support, {
   source: 'https://github.com/davidjaksa/ModuleOpenLdapSync',
 });
 assert.ok(!Object.hasOwn(composer, 'funding'));
+
+// Mirror Composer\Package\Locker::getContentHash(). Composer uses
+// json_encode(..., 0), which escapes forward slashes before hashing.
+const composerHashKeys = [
+  'name', 'version', 'require', 'require-dev', 'conflict', 'replace',
+  'provide', 'minimum-stability', 'prefer-stable', 'repositories', 'extra',
+];
+const composerHashInput = {};
+for (const key of composerHashKeys) {
+  if (Object.hasOwn(composer, key)) composerHashInput[key] = composer[key];
+}
+if (composer.config?.platform) {
+  composerHashInput.config = { platform: composer.config.platform };
+}
+const sortedComposerHashInput = Object.fromEntries(
+  Object.entries(composerHashInput).sort(([left], [right]) => left.localeCompare(right)),
+);
+const composerHashJson = JSON.stringify(sortedComposerHashInput).replaceAll('/', '\\/');
+const expectedComposerHash = createHash('md5').update(composerHashJson).digest('hex');
+const composerLock = JSON.parse(await readFile(join(moduleRoot, 'composer.lock'), 'utf8'));
+assert.equal(composerLock['content-hash'], expectedComposerHash, 'stale composer.lock content hash');
 
 const dependencyLicenseFiles = [
   'vendor/directorytree/ldaprecord/license.md',

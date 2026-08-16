@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.2 - 2026-08-17
+
+- Regenerate the Composer lock content hash after finalizing the independent
+  package identity and GitHub repository metadata.
+- Keep the source validation workflow and install archive on the same release
+  version.
+
 ## 1.1.1 - 2026-08-17
 
 - Add dated GPL modification and independent-project notices.

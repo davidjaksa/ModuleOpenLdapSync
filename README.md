@@ -46,7 +46,7 @@ workers do not update the same employees concurrently.
 Install the locked production dependencies with Composer, then run:
 
 ```sh
-./scripts/build-release.sh /absolute/path/ModuleOpenLdapSync.1.1.1.zip
+./scripts/build-release.sh /absolute/path/ModuleOpenLdapSync.1.1.2.zip
 ```
 
 The build refuses to run if `vendor/autoload.php` or any bundled dependency

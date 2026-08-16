@@ -36,6 +36,9 @@ Version 1.1.1, modified 2026-08-17, adds publication-compliance metadata,
 third-party notices, complete bundled dependency license texts, and clearer
 separation from upstream support and branding.
 
+Version 1.1.2, modified 2026-08-17, synchronizes the Composer lock metadata
+with the independent package identity and public repository information.
+
 No MikoPBX license keys, license-service code, or marketplace binaries are
 included or modified by this distribution.
 
