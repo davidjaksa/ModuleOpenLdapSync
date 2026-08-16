@@ -39,6 +39,9 @@ separation from upstream support and branding.
 Version 1.1.2, modified 2026-08-17, synchronizes the Composer lock metadata
 with the independent package identity and public repository information.
 
+Version 1.1.3, modified 2026-08-17, corrects the MikoPBX configuration-class
+name used to discover the module REST callback and synchronization worker.
+
 No MikoPBX license keys, license-service code, or marketplace binaries are
 included or modified by this distribution.
 

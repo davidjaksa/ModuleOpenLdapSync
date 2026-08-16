@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.3 - 2026-08-17
+
+- Rename the module configuration class to `OpenLdapSyncConf` so MikoPBX can
+  discover its REST callback and background worker from `ModuleOpenLdapSync`.
+- Restore all module API actions, including connection testing, user previews,
+  synchronization, disabled-user reports, and conflict management.
+
 ## 1.1.2 - 2026-08-17
 
 - Regenerate the Composer lock content hash after finalizing the independent

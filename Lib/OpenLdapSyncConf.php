@@ -26,7 +26,7 @@ use MikoPBX\PBXCoreREST\Lib\PBXApiResult;
 use Modules\ModuleOpenLdapSync\Lib\Workers\WorkerLdapSync;
 use Modules\ModuleOpenLdapSync\Models\LdapServers;
 
-class LdapSyncConf extends ConfigClass
+class OpenLdapSyncConf extends ConfigClass
 {
 
     /**

@@ -43,5 +43,5 @@ jobs:
 
       - name: Build and verify release archive
         run: |
-          NODE_BIN=node ./scripts/build-release.sh "$RUNNER_TEMP/ModuleOpenLdapSync.1.1.2.zip"
-          unzip -tqq "$RUNNER_TEMP/ModuleOpenLdapSync.1.1.2.zip"
+          NODE_BIN=node ./scripts/build-release.sh "$RUNNER_TEMP/ModuleOpenLdapSync.1.1.3.zip"
+          unzip -tqq "$RUNNER_TEMP/ModuleOpenLdapSync.1.1.3.zip"

@@ -19,7 +19,7 @@ async function filesUnder(directory) {
 
 const manifest = JSON.parse(await readFile(join(moduleRoot, 'module.json'), 'utf8'));
 assert.equal(manifest.moduleUniqueID, 'ModuleOpenLdapSync');
-assert.equal(manifest.version, '1.1.2');
+assert.equal(manifest.version, '1.1.3');
 assert.equal(manifest.min_pbx_version, '2025.1.1');
 assert.ok(!Object.hasOwn(manifest, 'lic_product_id'));
 assert.ok(!Object.hasOwn(manifest, 'lic_feature_id'));
@@ -79,7 +79,7 @@ for (const javascript of [sourceJs, compiledJs]) {
 const requiredFiles = [
   'App/Controllers/ModuleOpenLdapSyncController.php',
   'App/Views/ModuleOpenLdapSync/index.volt',
-  'Lib/LdapSyncConf.php',
+  'Lib/OpenLdapSyncConf.php',
   'Lib/LdapSyncConnector.php',
   'Lib/LdapSyncMain.php',
   'Models/ModuleOpenLdapSync.php',
@@ -94,6 +94,10 @@ const requiredFiles = [
 for (const file of requiredFiles) {
   assert.ok(files.includes(join(moduleRoot, file)), `missing ${file}`);
 }
+assert.ok(!files.includes(join(moduleRoot, 'Lib/LdapSyncConf.php')), 'obsolete config class filename');
+const configClass = await readFile(join(moduleRoot, 'Lib/OpenLdapSyncConf.php'), 'utf8');
+assert.match(configClass, /class\s+OpenLdapSyncConf\s+extends\s+ConfigClass/);
+assert.ok(configClass.includes('function moduleRestAPICallback'));
 
 const notice = await readFile(join(moduleRoot, 'NOTICE.md'), 'utf8');
 assert.ok(notice.includes('modified on 2026-08-17'));
