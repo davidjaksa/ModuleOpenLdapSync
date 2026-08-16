@@ -1,0 +1,52 @@
+{
+    "name": "community/module-open-ldap-sync",
+    "description": "Community GPL LDAP and Active Directory synchronization module for MikoPBX",
+    "require": {
+        "php": "^8.4",
+        "directorytree/ldaprecord": "^3.0",
+        "nesbot/carbon": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\ModuleOpenLdapSync\\": "/"
+        }
+    },
+    "type": "application",
+    "keywords": [
+        "pbx",
+        "asterisk",
+        "freepbx",
+        "mikopbx",
+        "sip",
+        "voip",
+        "phalcon",
+        "telephony",
+        "uc"
+    ],
+    "license": "GPL-3.0-or-later",
+    "homepage": "https://github.com/davidjaksa/ModuleOpenLdapSync",
+    "support": {
+        "issues": "https://github.com/davidjaksa/ModuleOpenLdapSync/issues",
+        "source": "https://github.com/davidjaksa/ModuleOpenLdapSync"
+    },
+    "authors": [
+        {
+            "name": "Alexey Portnov",
+            "role": "Original developer"
+        },
+        {
+            "name": "Nikolay Beketov",
+            "role": "Original developer"
+        },
+        {
+            "name": "Open community contributors",
+            "role": "Fork maintainer"
+        }
+    ],
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "8.4.0"
+        }
+    }
+}

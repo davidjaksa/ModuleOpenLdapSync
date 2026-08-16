@@ -1,0 +1,47 @@
+name: Validate
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+          extensions: ldap
+          coverage: none
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Validate Composer metadata
+        run: composer validate --no-check-publish
+
+      - name: Install locked production dependencies
+        run: composer install --no-dev --prefer-dist --no-interaction --no-progress
+
+      - name: Validate PHP syntax
+        run: find . -path './vendor' -prune -o -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: Validate shell and JavaScript syntax
+        run: |
+          sh -n scripts/build-release.sh
+          find public/assets/js -name '*.js' -print0 | xargs -0 -n1 node --check
+
+      - name: Build and verify release archive
+        run: |
+          NODE_BIN=node ./scripts/build-release.sh "$RUNNER_TEMP/ModuleOpenLdapSync.1.1.1.zip"
+          unzip -tqq "$RUNNER_TEMP/ModuleOpenLdapSync.1.1.1.zip"

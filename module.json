@@ -1,0 +1,21 @@
+{
+  "developer": "Open community contributors",
+  "moduleUniqueID": "ModuleOpenLdapSync",
+  "support_email": "",
+  "version": "1.1.1",
+  "min_pbx_version": "2025.1.1",
+  "module_type": "utility",
+  "wiki_links": {
+    "en": {
+      "https://github.com/davidjaksa/ModuleOpenLdapSync": "https://github.com/davidjaksa/ModuleOpenLdapSync#readme"
+    },
+    "ru": {
+      "https://github.com/davidjaksa/ModuleOpenLdapSync": "https://github.com/davidjaksa/ModuleOpenLdapSync/blob/main/readme.ru.md"
+    }
+  },
+  "release_settings": {
+    "publish_release": false,
+    "changelog_enabled": true,
+    "create_github_release": false
+  }
+}
